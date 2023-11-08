@@ -66,14 +66,6 @@ CREATE TABLE filme_distribuidora (
     CONSTRAINT id_distribuidora_PK FOREIGN KEY (id_distribuidora) REFERENCES distribuidora(id_distribuidora) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE filme_pais (
-    id_filme_pais INT NOT NULL AUTO_INCREMENT,
-    id_filme INT NOT NULL,
-    id_pais INT NOT NULL,
-    PRIMARY KEY(id_filme_pais),
-    CONSTRAINT id_filme_pais_PK FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT id_pais_PK FOREIGN KEY (id_pais) REFERENCES pais(id_pais) ON DELETE CASCADE ON UPDATE CASCADE
-);
 CREATE TABLE filme_alocacoes ( 
     id_filme_alocacoes INT NOT NULL AUTO_INCREMENT, 
     id_filme INT NOT NULL, 
@@ -82,6 +74,10 @@ CREATE TABLE filme_alocacoes (
     CONSTRAINT id_filme_alocacoes_PK FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE ON UPDATE CASCADE, 
     CONSTRAINT id_alocacoes_PK FOREIGN KEY (id_alocacoes) REFERENCES alocacoes(id_alocacoes) ON DELETE CASCADE ON UPDATE CASCADE 
 );
+
+ALTER TABLE filme 
+ADD COLUMN id_pais INT NOT NULL, 
+ADD CONSTRAINT fk_filme_pais FOREIGN KEY (id_pais) REFERENCES pais(id_pais);
 
 ALTER TABLE login
 ADD password varchar(64);
