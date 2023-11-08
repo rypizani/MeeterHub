@@ -82,3 +82,6 @@ CREATE TABLE filme_alocacoes (
     CONSTRAINT id_filme_alocacoes_PK FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE ON UPDATE CASCADE, 
     CONSTRAINT id_alocacoes_PK FOREIGN KEY (id_alocacoes) REFERENCES alocacoes(id_alocacoes) ON DELETE CASCADE ON UPDATE CASCADE 
 );
+
+ALTER TABLE login
+ADD password varchar(64);
