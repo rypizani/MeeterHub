@@ -12,6 +12,7 @@ const paisRouter = require('./router/paisRouter');
 const filmeRouter = require('./router/filmeRouter');
 const loginRouter = require('./router/loginRouter');
 const alocacoesRouter = require('./router/alocacoesRouter');
+const atorRouter = require('./router/atorRouter')
 
 // rotas sendo usadas
 app.use('/pais', paisRouter); //endpoint pais
@@ -19,6 +20,7 @@ app.use('/filme', filmeRouter); //endpoint filme
 app.use('/distribuidora', distribuidoraRouter); //endpoint distribuidora
 app.use('/login', loginRouter); //endpoint distribuidora
 app.use('/alocacoes', alocacoesRouter); //endpoint distribuidora
+app.use('/ator', atorRouter); //endpoint distribuidora
 
 app.listen( porta, () => {
     console.log(`servidor no ar na porta ${porta}`); 

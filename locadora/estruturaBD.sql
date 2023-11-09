@@ -4,10 +4,10 @@ CREATE TABLE filme (
     PRIMARY KEY(id_filme)
 );
 
-CREATE TABLE atores (
-    id_atores INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE ator (
+    id_ator INT NOT NULL AUTO_INCREMENT,
     nome varchar(30) NOT NULL,
-    PRIMARY KEY(id_atores)
+    PRIMARY KEY(id_ator)
 );
 
 CREATE TABLE genero (
@@ -42,13 +42,13 @@ CREATE TABLE login (
     PRIMARY KEY(id_login)
 );
 
-CREATE TABLE filme_atores (
-    id_filme_atores INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE filme_ator (
+    id_filme_ator INT NOT NULL AUTO_INCREMENT,
     id_filme INT NOT NULL,
-    id_atores INT NOT NULL,
-    PRIMARY KEY(id_filme_atores),
-    CONSTRAINT id_filme_atores_PK FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT id_atores_PK FOREIGN KEY (id_atores) REFERENCES atores(id_atores) ON DELETE CASCADE ON UPDATE CASCADE
+    id_ator INT NOT NULL,
+    PRIMARY KEY(id_filme_ator),
+    CONSTRAINT id_filme_ator_PK FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT id_atores_PK FOREIGN KEY (id_ator) REFERENCES ator(id_ator) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE filme_genero (
