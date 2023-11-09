@@ -10,6 +10,12 @@ const  paisRouter = require('./router/paisRouter');
 
 app.use('/pais', paisRouter);
 
+const filmeRouter = require('./router/filmeRouter');
+
+app.use('/filme', filmeRouter);
+
+
+
 app.listen( porta, () => {
     console.log(`servidor no ar na porta ${porta}`); 
 })
