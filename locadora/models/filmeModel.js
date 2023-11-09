@@ -6,7 +6,7 @@ class ModeloFilme{
     async criarFilme(filme){
         const connection = await pool.getConnection();
         try{
-            const [resultado ] = await connection.query(
+            const [resultado] = await connection.query(
                 'insert into filme (nome, id_pais ) values (?, ?)',
                 [filme.nome, filme.id_pais]
             );

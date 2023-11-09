@@ -37,9 +37,11 @@ CREATE TABLE alocacoes (
 CREATE TABLE login (
     id_login INT NOT NULL AUTO_INCREMENT,
     nome varchar(30) NOT NULL,
-    tp_login varchar(1) NOT NULL,
+    tp_login varchar(1) NOT NULL, -- (1 - Admin), (0 - Usuário)
+    password varchar(64) NOT NULL
     PRIMARY KEY(id_login)
 );
+
 CREATE TABLE filme_atores (
     id_filme_atores INT NOT NULL AUTO_INCREMENT,
     id_filme INT NOT NULL,
@@ -48,6 +50,7 @@ CREATE TABLE filme_atores (
     CONSTRAINT id_filme_atores_PK FOREIGN KEY (id_filme) REFERENCES filme(id_filme) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT id_atores_PK FOREIGN KEY (id_atores) REFERENCES atores(id_atores) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 CREATE TABLE filme_genero (
     id_filme_genero INT NOT NULL AUTO_INCREMENT,
     id_filme INT NOT NULL,

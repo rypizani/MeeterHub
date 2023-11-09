@@ -1,14 +1,14 @@
 const mysql = require('mysql2/promise');
 const pool = require('../pool')
 
-class ModeloLogin{
+class ModeloAlocacoes{
     
-    async criarLogin(login){
+    async criarAlocacoes(alocacoes){
         const connection = await pool.getConnection();
         try{
             const [resultado ] = await connection.query(
-                'insert into login (nome, tp_login ) values (?, ?)',
-                [login.nome, login.tp_login]
+                'INSERT INTO alocacoes (nome) VALUES (?)',
+                [alocacoes.nome]
             );
             return resultado.insertId;
         } finally {
@@ -16,11 +16,11 @@ class ModeloLogin{
         }
     }
 
-    async obterTodosLogins() {
+    async obterTodosAlocacoess() {
         const connection = await pool.getConnection();
         try{
             const [registros] = await connection.query(
-                'select * from login'
+                'SELECT * FROM alocacoes'
             );
             return registros;
         } finally {
@@ -28,11 +28,11 @@ class ModeloLogin{
         }
     }
 
-    async obterLoginsPorId(id) {
+    async obterAlocacoessPorId(id) {
         const connection = await pool.getConnection();
         try{
             const [resultado] = await connection.query(
-                'SELECT * FROM login WHERE id_login = ?',
+                'SELECT * FROM alocacoes WHERE id_alocacoes = ?',
                 [id]
             );
             return resultado[0];
@@ -41,12 +41,12 @@ class ModeloLogin{
         }
     }
 
-    async atualizarLogin(id, login) {
+    async atualizarAlocacoes(id, alocacoes) {
         const connection = await pool.getConnection();
         try{
             await connection.query(
-                'UPDATE login SET nome = ?, tp_login = ? where id_login = ?',
-                [login.nome, login.tp_login, id]
+                'UPDATE alocacoes SET nome = ? where id_alocacoes = ?',
+                [alocacoes.nome, id]
             );
             return true;
         } finally {
@@ -54,11 +54,11 @@ class ModeloLogin{
         }
     }
 
-    async excluirLogin(id) {
+    async excluirAlocacoes(id) {
         const connection = await pool.getConnection();
         try{
             await connection.query(
-                'DELETE from login where id_login = ?',
+                'DELETE FROM alocacoes WHERE id_alocacoes = ?',
                 [id]
             );
             return true;
@@ -69,4 +69,4 @@ class ModeloLogin{
 
 }
 
-module.exports = new ModeloLogin();
+module.exports = new ModeloAlocacoes();
