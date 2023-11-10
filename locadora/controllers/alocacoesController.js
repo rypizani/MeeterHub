@@ -1,14 +1,25 @@
 const ModeloAlocacoes = require('../models/alocacoesModel')
+const acesso = require('../middleware/acesso')
 
 class AlocacoesController{
     
+
+
     async criarAlocacoes(req, res) {
-        const alocacoes = req.body;
+
+        // Aqui se carrega o idUsuario do front
+        // Id de user 2 para não administrador e 3 para adminnistrador
+        const idUsuario = 3;
+        const validacao = await acesso.autorizarTipoLogin(idUsuario);
+        if(validacao){ const alocacoes = req.body;
         try {
+            const alocacoes = req.body;
             const idAlocacoes = await ModeloAlocacoes.criarAlocacoes(alocacoes);
             res.status(201).json({ id_alocacoes: idAlocacoes });
         } catch (erro) {
             res.status(500).json({ erro: "Erro ao criar um Alocacoes" });
+        }}  else {
+            res.status(403).json({ erro: 'Acesso não autorizado' });
         }
     }
 
