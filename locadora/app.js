@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const verificarAcesso = require("../locadora/middleware/acesso");
 
 const app = express();
 const porta = 3000;
@@ -16,20 +17,14 @@ const atorRouter = require("./router/atorRouter");
 const generoRouter = require("./router/generoRouter");
 
 // rotas sendo usadas
-app.use("/pais", paisRouter); //endpoint pais
-app.use("/filme", filmeRouter); //endpoint filme
-app.use("/distribuidora", distribuidoraRouter); //endpoint distribuidora
-app.use("/login", loginRouter); //endpoint distribuidora
-app.use("/alocacoes", alocacoesRouter); //endpoint distribuidora
-app.use("/ator", atorRouter); //endpoint distribuidora
-app.use("/genero", generoRouter); //endpoint distribuidora
+app.use("/pais", verificarAcesso, paisRouter); // Endpoint pais
+app.use("/filme", filmeRouter); // Endpoint filme
+app.use("/distribuidora", verificarAcesso, distribuidoraRouter); // Endpoint distribuidora
+app.use("/login", verificarAcesso, loginRouter); // Endpoint login
+app.use("/alocacoes", verificarAcesso, alocacoesRouter); // Endpoint alocacoes
+app.use("/ator", verificarAcesso, atorRouter); // Endpoint ator
+app.use("/genero", verificarAcesso, generoRouter); // Endpoint genero
 
 app.listen(porta, () => {
-  console.log(`servidor no ar na porta ${porta}`);
+  console.log('servidor no ar na porta ${porta}');
 });
-
-// const verificacaoAdmin = require('./middleware/verificacaoAdministrador')
-
-// app.use('/pais', verificacaoAdmin , paisRouter, (req, res) => {
-//     res.json({msg: 'Não autorizado'})
-// }); //endpoint pais
