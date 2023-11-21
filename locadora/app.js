@@ -28,3 +28,5 @@ app.use("/genero", verificarAcesso, generoRouter); // Endpoint genero
 app.listen(porta, () => {
   console.log('servidor no ar na porta ${porta}');
 });
+
+//comentario de atualização
