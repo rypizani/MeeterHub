@@ -1,0 +1,2 @@
+Comando para criar as tabelas pelo sequelizer
+npx sequelize-cli db:migrate

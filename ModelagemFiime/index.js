@@ -4,6 +4,8 @@ const path = require('path');
 require ("dotenv").config();
 const app = express();
 //Imports aqui \/ 
+const LoginRouter = require('./router/Login/LoginRouter');
+const { LoginValidator }= require('./middleware/Validator/LoginValidator')
 const porta = 3000;
 app.use(express.json());
 
@@ -19,6 +21,8 @@ app.use((req, res, next) => {
     express.application.use(cors());
     next();
 })
+
+app.use( "/login", LoginRouter);
 
 app.get("/", (req, res) => {
     res.send({ message: 'Welcome to the matrix' });   
