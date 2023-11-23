@@ -7,7 +7,7 @@ exports.AtorController = {
         try{
             const ator = await Ator.create({
                 nome
-            } )
+            } );
             return res.status(201).json(ator);
         } catch (erro) {
             res.status(500).json({ erro: "Erro ao criar ator "});
