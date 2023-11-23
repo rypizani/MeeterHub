@@ -7,11 +7,12 @@ const Ator = sequelize.define('ator', {
         type:DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-      },
-      nome: {
+    },
+    nome: {
         type: DataTypes.STRING(64),
         allowNull: false,
-      }
+    }
+
 }, {freezeTableName: true})
 
 exports.Ator = Ator;

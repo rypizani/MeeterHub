@@ -5,9 +5,9 @@ require ("dotenv").config();
 const app = express();
 //Imports aqui \/ 
 const LoginRouter = require('./router/Login/LoginRouter');
-const AtorRouter = require('./router/Ator/AtorRouter');
 const FilmeRouter = require('./router/Filme/FilmeRouter');
 const GeneroController = require('./router/Genero/GeneroRouter')  
+const AtorRouter = require('./router/Ator/AtorRouter');
 const { LoginValidator }= require('./middleware/Validator/LoginValidator')
 const porta = 3000;
 app.use(express.json());
@@ -25,9 +25,9 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use("/ator", AtorRouter);
 app.use("/filme", FilmeRouter);
 app.use( "/login", LoginRouter);
-app.use( "/ator", AtorRouter);
 app.use( "/genero", GeneroController)
 
 
