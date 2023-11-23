@@ -10,6 +10,7 @@ const FilmeRouter = require('./router/Filme/FilmeRouter');
 const GeneroRouter = require('./router/Genero/GeneroRouter')  
 const DistribuidoraRouter = require('./router/Distribuidora/Distribuidora');
 const PaisRouter = require('./router/Pais/PaisRouter');
+const AlocacoesRouter = require('./router/Alocacoes/AlocacoesRouter');
 const { LoginValidator }= require('./middleware/Validator/LoginValidator')
 const porta = 3000;
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use("/filme", FilmeRouter);
 app.use("/genero", GeneroRouter);
 app.use("/distribuidora", DistribuidoraRouter);
 app.use("/pais", PaisRouter);
+app.use("/alocacoes", AlocacoesRouter);
 
 app.get("/", (req, res) => {
     res.send({ message: 'Welcome to the matrix' });   
