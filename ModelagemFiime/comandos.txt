@@ -1,2 +1,6 @@
-Comando para criar as tabelas pelo sequelizer
+Primeiro comando a ser rodado
+npx sequelize-cli migration:generate --name createAutor
+
+
+segundo comando para criar as tabelas pelo sequelizer
 npx sequelize-cli db:migrate
