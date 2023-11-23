@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 })
 
 app.use( "/login", LoginRouter);
-app.use( "/autor", AtorRouter);
+app.use( "/ator", AtorRouter);
 
 app.get("/", (req, res) => {
     res.send({ message: 'Welcome to the matrix' });   

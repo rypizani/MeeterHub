@@ -46,7 +46,7 @@ exports.LoginController = {
     },
 
     async post (req, res){
-        const{ password, tp_login, nome }= req.body;
+        const { password, tp_login, nome } = req.body;
         try {
             const login = await Login.create({
                 password, tp_login, nome
