@@ -1,15 +1,17 @@
 const { Registro } = require('../../models/Registro/Registro');
+const bcrypt = require('bcrypt');
 
 exports.RegistroController = {
 
     async post (req,res){
         const { nome, email, endereco, senha, CEP } = req.body;
         try{
+            const hashedPassword = await bcrypt.hash(senha, 10)
             const registro = await Registro.create({                
                 nome,
                 email,
                 endereco,
-                senha,
+                senha: hashedPassword,
                 CEP
             })
             return res.status(201).json(registro);

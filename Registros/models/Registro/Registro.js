@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../dbconfig');
+const bcrypt = require('bcrypt');
 
 const Registro = sequelize.define('registro', {
 
@@ -30,6 +31,19 @@ const Registro = sequelize.define('registro', {
         allowNull: false,
     }
 
-}, {freezeTableName: true})
+}, {freezeTableName: true});
+
+/*
+Criptogragia no model:
+
+Registro.beforeCreate(async (registro) => {
+    try {
+        const hashedPassword = await bcrypt.hash(registro.senha, 10);
+        registro.senha = hashedPassword;
+    } catch (error) {
+        throw new Error('Erro ao criptografar a senha:', error);
+    }
+});
+*/
 
 exports.Registro = Registro;
