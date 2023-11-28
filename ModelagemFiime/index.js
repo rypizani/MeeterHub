@@ -17,6 +17,7 @@ const FilmeAlocacoesRouter = require('./router/Filme_alocacoes/FilmeAlocacoesRou
 const FilmeGeneroRouter = require('./router/Filme_genero/FilmeGeneroRouter');
 const FilmeAtorRouter = require('./router/Filme_ator/FilmeAtorRouter');
 const FilmeDistribuidoraRouter = require('./router/Filme_distribuidora/FilmeDistribuidoraRouter');
+const RegistroRouter = require('./router/Registro/RegistroRouter');
 const { LoginValidator } = require('./middleware/Validator/LoginValidator');
 
 const porta = 3000;
@@ -44,9 +45,9 @@ app.use("/pais", PaisRouter);
 app.use("/alocacoes", AlocacoesRouter);
 app.use("/filme_alocacoes", FilmeAlocacoesRouter); // Adicione o roteador FilmeAlocacoesRouter
 app.use("/filme_genero", FilmeGeneroRouter); // Adicione o roteador FilmeGeneroRouter
-app.use("/Filme_ator", FilmeAtorRouter); // Adicione o roteador FilmeGeneroRouter
+app.use("/filme_ator", FilmeAtorRouter); // Adicione o roteador FilmeGeneroRouter
 app.use("/filme_distribuidora", FilmeDistribuidoraRouter);
-
+app.use("/registro",RegistroRouter);
 
 app.get("/", (req, res) => {
   res.send({ message: 'Welcome to the matrix' });
