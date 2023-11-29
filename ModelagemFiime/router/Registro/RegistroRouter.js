@@ -1,7 +1,7 @@
 const { RegistroController } = require('../../controller/Registro/RegistroController');
 const router = require("express").Router();
 const RegistroValidator = require('../../middleware/Validator/RegistroValidator');
-const { login } = require('../../middleware/Validator/Login')
+const { login } = require('../../controller/HomeController')
 
 router.post('/', RegistroValidator, RegistroController.post);
 router.get('/', RegistroController.getAll);
