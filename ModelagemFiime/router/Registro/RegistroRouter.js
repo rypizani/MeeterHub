@@ -9,6 +9,7 @@ router.get('/:registroId', RegistroController.getById);
 router.put('/:registroId', RegistroController.put);
 router.delete('/:registroId', RegistroValidator, RegistroController.delete);
 router.get('/email/:email', RegistroController.getByEmail);
+router.get('/login/:email/:senha', RegistroController.getByEmailAndComparePassword)
 /* Codigo a ser atualizado contem erro
 router.get('/recurso-protegido/:email/:senha', login, async (req, res) => {
     const { email, senha } = req.params;

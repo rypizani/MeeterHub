@@ -65,13 +65,15 @@ exports.RegistroController = {
     },
 
     //BUscando email e senha no banco
-    async  getByEmailAndComparePassword(email, senha) {
+    async  getByEmailAndComparePassword(req, res) {
+        const email = req.params.email;
+        const senha = req.params.senha;
         try {
             // Buscar o registro pelo email fornecido
             const registro = await Registro.findOne({
                 where: { email: email }
             });
-    
+            //const hashedPassword = await bcrypt.hash(senha, 10)
             if (registro) {
                 // Comparar a senha fornecida com a senha armazenada usando bcrypt
                 const senhaCorreta = await bcrypt.compare(senha, registro.senha);
