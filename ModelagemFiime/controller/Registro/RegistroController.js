@@ -44,6 +44,25 @@ exports.RegistroController = {
         }
     },
 
+    async getByEmail(req, res) {
+        const email = req.params.email; // Ou você pode pegar o email de req.query ou req.body, dependendo de como estiver sendo enviado
+    
+        try {
+            const registro = await Registro.findOne({
+                where: { email: email }
+            });
+    
+            if (registro) {
+                return res.status(200).json(registro);
+            } else {
+                return res.status(404).json({ mensagem: 'Registro não encontrado' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensagem: 'Erro ao buscar o registro por email' });
+        }
+    },
+
     async put (req, res){
         const registroId = req.params.registroId;
         const{ nome, email, senha, endereco, CEP }= req.body;
@@ -69,6 +88,7 @@ exports.RegistroController = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ erro: "Erro ao atualizar um registro" });
+      
         }
     },
 
