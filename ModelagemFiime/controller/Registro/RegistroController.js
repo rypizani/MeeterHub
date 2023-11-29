@@ -44,6 +44,7 @@ exports.RegistroController = {
         }
     },
 
+    //Get por email
     async getByEmail(req, res) {
         const email = req.params.email; // Ou você pode pegar o email de req.query ou req.body, dependendo de como estiver sendo enviado
     
@@ -62,6 +63,36 @@ exports.RegistroController = {
             res.status(500).json({ mensagem: 'Erro ao buscar o registro por email' });
         }
     },
+
+    //BUscando email e senha no banco
+    async  getByEmailAndComparePassword(email, senha) {
+        try {
+            // Buscar o registro pelo email fornecido
+            const registro = await Registro.findOne({
+                where: { email: email }
+            });
+    
+            if (registro) {
+                // Comparar a senha fornecida com a senha armazenada usando bcrypt
+                const senhaCorreta = await bcrypt.compare(senha, registro.senha);
+    
+                if (senhaCorreta) {
+                    // Senha correta, retornar o registro do usuário
+                    return res.status(200).json({ mensagem: 'Usuário autenticado', registro: registro });
+                } else {
+                    // Senha incorreta
+                    return res.status(401).json({ mensagem: 'Credenciais inválidas' });
+                }
+            } else {
+                // Usuário não encontrado
+                return res.status(403).json({ mensagem: 'Usuário não encontrado' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensagem: 'Erro durante a busca e comparação de senha' });
+        }
+    },
+    
 
     async put (req, res){
         const registroId = req.params.registroId;
