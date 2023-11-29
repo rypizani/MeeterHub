@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use("/login", LoginRouter);
+// app.use("/login", LoginRouter);
 app.use("/ator", AtorRouter);
 app.use("/filme", FilmeRouter);
 app.use("/genero", GeneroRouter);
@@ -52,6 +52,7 @@ app.use("/filme_distribuidora", FilmeDistribuidoraRouter);
 
 //Rotas do controle de registro
 app.post("/registro", HomeController.register )
+app.post("/login", HomeController.login )
 
 app.get("/", (req, res) => {
   res.send({ message: 'Welcome to the matrix' });
