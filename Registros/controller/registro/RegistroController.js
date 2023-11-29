@@ -46,11 +46,16 @@ exports.RegistroController = {
 
     async put (req, res){
         const registroId = req.params.registroId;
-        const{ nome }= req.body;
+        const{ nome, email, endereco, CEP }= req.body;
         try {
             const registro = await Alocacoes.findByPk(registroId);
             if(registro){
-                await registro.update({nome});
+                await registro.update({               
+                    nome,
+                    email,
+                    endereco,
+                    CEP
+                });
                 res.status(200).json(registro);
             } else {
                 res.status(404).json({menssage: 'Registro não encontrado'});

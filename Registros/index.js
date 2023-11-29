@@ -6,6 +6,7 @@ const app = express();
 
 //Os imports vem aqui
 const RegistroRouter = require('./router/Registro/registroRouter');
+const LoginRouter = require('./router/Login/loginRouter');
 
 
 const porta = 3000;
@@ -26,6 +27,8 @@ app.use((req, res, next) => {
 
 //Os endpoints vem aqui
 app.use("/registro", RegistroRouter);
+app.use("/login", LoginRouter);
+
 
 app.get("/", (req, res) => {
     res.send({ message: 'Olá' });

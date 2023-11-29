@@ -1,13 +1,9 @@
 const { body, validationResult } = require('express-validator');
 
-const validarRegistro = [
-    body('nome')
+const validarLogin = [
+    body('email')
         .isString().withMessage('O nome deve ser uma string')
         .isLength({ min: 3, max: 64 }).withMessage('O nome deve ter entre 2 e 64 caracteres'),
-
-    body('email')
-        .isEmail().withMessage('O email deve ser um endereço de email válido')
-        .isLength({ min: 5, max: 64 }).withMessage('O email deve ter entre 5 e 64 caracteres'),
 
     body('senha')
         .isString().withMessage('A senha deve ser uma string')
@@ -24,4 +20,4 @@ const validarRegistro = [
     }
 ];
 
-module.exports = validarRegistro;
+module.exports = validarLogin;
