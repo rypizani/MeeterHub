@@ -21,6 +21,7 @@ const RegistroRouter = require('./router/Registro/RegistroRouter');
 const { HomeController }=  require('./controller/HomeController');
 const { LoginValidator } = require('./middleware/Validator/LoginValidator');
 
+
 const porta = 3000;
 
 app.use(express.json());
@@ -53,6 +54,7 @@ app.use("/filme_distribuidora", FilmeDistribuidoraRouter);
 //Rotas do controle de registro
 app.post("/registro", HomeController.register )
 app.post("/login", HomeController.login )
+app.post("/forgetpassword", HomeController.forgetPassword )
 
 app.get("/", (req, res) => {
   res.send({ message: 'Welcome to the matrix' });

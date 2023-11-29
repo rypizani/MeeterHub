@@ -29,6 +29,10 @@ const Registro = sequelize.define('registro', {
     CEP: {
         type: DataTypes.STRING(11),
         allowNull: false,
+    },
+    token:{
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 
 }, {freezeTableName: true});

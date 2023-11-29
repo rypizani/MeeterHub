@@ -1,36 +1,60 @@
 const bcrypt = require('bcrypt');
 const { Registro } = require('../models/Registro/Registro');
+const { connect } = require("../dbconfig");
 const { RegistroController } = require('../controller/Registro/RegistroController');
-const nodemailer = require('nodemailer');
 const { JWTController } = require('../middleware/JWTController');
+const nodemailer = require('nodemailer');
+
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.titan.email", // Substitua "yourdomain.com" pelo seu domínio na Hostinger
-    port: 465, // A porta pode ser 587 ou 465, dependendo das configurações do seu provedor
-    secure: true, // Use true para a porta 465, false para a porta 587
-    auth: {
-      user: "contato@rhuna.tech", // Substitua pelo seu endereço de e-mail
-      pass: "Rhunatech2023#", // Substitua pela sua senha
-    }
-  });
-
-const mailOptions = {
-    from: 'contato@rhuna.tech',
-    to: 'destinatario <dest@gmail.com>',
-    subject: 'salve',
-    html: '<h5>salve</h5>'
-  };
-
-return transporter.sendMail(mailOptions, (erro, info) => {
-    if (erro) {
-      console.log('Erro ao enviar email');
-      return reject(erro);
-    }
-    return resolve({ success: true });
-  });
+  host: "smtp.hostinger.com", // Substitua "yourdomain.com" pelo seu domínio na Hostinger
+  port: 465, // A porta pode ser 587 ou 465, dependendo das configurações do seu provedor
+  secure: true, // Use true para a porta 465, false para a porta 587
+  auth: {
+    user: "contato@rhuna.tech", // Substitua pelo seu endereço de e-mail
+    pass: "Rhunatech2023#", // Substitua pela sua senha
+  },
+  tls:{rejectUnauthorized: false,},
+});
 
 
 exports.HomeController = {
+  
+  async forgetPassword(req, res){
+    await connect();
+
+    const email = req.body.email;
+  const registro = await RegistroController.getByEmail(email);
+
+  if (!registro) {
+    return res.status(404).json({ errors: { msg: "User not found" } });
+  }
+
+  // Gere um token exclusivo para redefinição de senha (pode ser um UUID)
+  const resetToken = bcrypt.hashSync(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15), 10);
+  // Armazene o token no banco de dados (você pode adicionar um campo 'resetToken' ao modelo Login)
+  registro.token = resetToken;
+  await registro.save();
+
+  // Envie o e-mail com o link para redefinição de senha
+  const resetLink = `${resetToken}`;
+  const mailOptions = {
+    from: "contato@rhuna.tech",
+    to: email,
+    subject: "Redefinição de Senha",
+    html: `Você solicitou a redefinição de senha. Copie e cole a chave no campo solicitado ${resetLink}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error)
+      return res.status(500).json({ errors: { msg: "Failed to send reset email" } });
+    }
+
+    res.status(200).json({ success: { msg: "Reset email sent successfully" } });
+  });
+  },
+
 
     async register(req, res){
         let registro =  await RegistroController.getByEmail(req.body.email);
@@ -81,6 +105,8 @@ exports.HomeController = {
             return res.status(401).json({ mensagem: 'Credenciais inválidas' });
         }
     },
+
+
 }
 	
 
