@@ -1,6 +1,7 @@
 const { Registro } = require('../../models/Registro/Registro');
 const { Login } = require('../../models/Login/Login');
 const bcrypt = require('bcrypt');
+const { JWTController } = require('../../middleware/JWTController');
 
 exports.LoginController = {
 
@@ -24,6 +25,18 @@ exports.LoginController = {
                         email: registro.email,
                         senha: senhaCorreta,
                     });
+
+                     // Criar token JWT
+                     const payload = { 
+                        email: registro.email,
+                        senha: senhaCorreta
+                    };
+
+                     const tokens = JWTController.createToken(payload);
+ 
+                     // Salvar o token na coluna tokenJWT da tabela Login
+                     login.tokenJWT = tokens.access_token;
+                     await login.save()
 
                     // Retornar o registro do usuário
                     return res.status(201).json({ mensagem: 'Usuário autenticado', login });
