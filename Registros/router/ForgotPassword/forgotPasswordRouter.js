@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const { registroController } = require('../../controller/login/LoginController');
+const { forgotPasswordController } = require('../../controller/forgotPassword/forgotPasswordController');
 
-router.post('/', registroController.delete);
+router.post('/', forgotPasswordController.sendEmailToken);
 
 module.exports = router;

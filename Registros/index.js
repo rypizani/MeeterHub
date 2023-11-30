@@ -7,6 +7,7 @@ const app = express();
 //Os imports vem aqui
 const RegistroRouter = require('./router/Registro/registroRouter');
 const LoginRouter = require('./router/Login/loginRouter');
+const forgotPasswordRouter = require('./router/ForgotPassword/forgotPasswordRouter')
 
 
 const porta = 3000;
@@ -23,11 +24,12 @@ app.use((req, res, next) => {
     );
     express.application.use(cors());
     next();
-})
+});
 
 //Os endpoints vem aqui
 app.use("/registro", RegistroRouter);
 app.use("/login", LoginRouter);
+app.use("/forgotpassword", forgotPasswordRouter);
 
 
 app.get("/", (req, res) => {
@@ -36,4 +38,4 @@ app.get("/", (req, res) => {
 
 app.listen(porta, () => {
     console.log('servidor no ar na porta 3000');
-})
+});

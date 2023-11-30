@@ -1,23 +1,33 @@
+const { ForgotPassword } = require('../../models/ForgotPassword/ForgotPassword');
 const { JWTController } = require('../../middleware/JWTController');
 
-exports.LoginController = {
+exports.forgotPasswordController = {
 
-    async sendEmailToken(req, res) {
+    async sendEmailToken (req, res) {
         const { email } = req.body;
 
         try {
+
             const payload = {
                 email: email,
-                // outras informações relevantes, se aplicável
             };
 
             const resetToken = JWTController.createToken(payload);
 
+            const login = await ForgotPassword.create({
+                email: email,
+                tokenJWT: resetToken.access_token, // Corrigindo aqui
+            });
+
+            const responseObj = {
+                email: login.email, // ou login.get('email') dependendo do modelo
+                tokenJWT: resetToken.access_token,
+            };
+        
+
             // Aqui você geralmente enviaria um e-mail para o usuário contendo o link de redefinição
 
-            // usando o resetToken.access_token como parte do link
-
-            res.status(200).json({ mensagem: 'Token de redefinição enviado com sucesso' });
+            res.status(201).json({ mensagem: 'Token de redefinição enviado com sucesso', responseObj });
 
         } catch (error) {
             
