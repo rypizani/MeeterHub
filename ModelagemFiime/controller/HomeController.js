@@ -107,7 +107,7 @@ exports.HomeController = {
     },
 
     async refreshPassword (req, res) {
-      const { email, token, novaSenha } = req.body;
+      const { email, token, senha } = req.body;
   
       try {
         // Buscar o registro pelo email fornecido
@@ -117,7 +117,7 @@ exports.HomeController = {
   
         if (registro) {
   
-          const hashedPassword = await bcrypt.hash(novaSenha, 10);
+          const hashedPassword = await bcrypt.hash(senha, 10);
                 
           registro.token = null;
           registro.senha = hashedPassword;
