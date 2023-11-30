@@ -3,7 +3,7 @@ const { body, validationResult } = require('express-validator');
 const validarLogin = [
     body('email')
         .isString().withMessage('O nome deve ser uma string')
-        .isLength({ min: 3, max: 64 }).withMessage('O nome deve ter entre 2 e 64 caracteres'),
+        .isLength({ min: 6, max: 64 }).withMessage('O email deve ter entre 2 e 64 caracteres'),
 
     body('senha')
         .isString().withMessage('A senha deve ser uma string')
