@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 require("dotenv").config();
 const app = express();
+const { JWTController } = require('./middleware/JWTController')
 
 // Outros imports aqui ...
 
@@ -41,7 +42,7 @@ app.use((req, res, next) => {
 // app.use("/login", LoginRouter);
 app.use("/ator", AtorRouter);
 app.use("/filme", FilmeRouter);
-app.use("/genero", GeneroRouter);
+app.use("/genero",JWTController.verifyAccessToken.bind(JWTController), GeneroRouter);
 app.use("/distribuidora", DistribuidoraRouter);
 app.use("/pais", PaisRouter);
 app.use("/alocacoes", AlocacoesRouter);
@@ -54,6 +55,7 @@ app.use("/filme_distribuidora", FilmeDistribuidoraRouter);
 //Rotas do controle de registro
 app.post("/registro", HomeController.register )
 app.post("/login", HomeController.login )
+app.post("/refreshPassword",HomeController.refreshPassword)
 app.post("/forgetpassword", HomeController.forgetPassword )
 
 app.get("/", (req, res) => {

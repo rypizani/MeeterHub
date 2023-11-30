@@ -32,7 +32,6 @@ const Registro = sequelize.define('registro', {
     },
     token:{
         type: DataTypes.STRING,
-        allowNull: false,
     }
 
 }, {freezeTableName: true});

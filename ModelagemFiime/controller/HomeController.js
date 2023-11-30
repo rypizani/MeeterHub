@@ -51,7 +51,7 @@ exports.HomeController = {
       return res.status(500).json({ errors: { msg: "Failed to send reset email" } });
     }
 
-    res.status(200).json({ success: { msg: "Reset email sent successfully" } });
+    res.status(200).json({ success: { msg: "Reset email sent successfully", token: resetToken } });
   });
   },
 
@@ -105,6 +105,36 @@ exports.HomeController = {
             return res.status(401).json({ mensagem: 'Credenciais inválidas' });
         }
     },
+
+    async refreshPassword (req, res) {
+      const { email, token, novaSenha } = req.body;
+  
+      try {
+        // Buscar o registro pelo email fornecido
+        const registro = await Registro.findOne({
+          where: { email: email, token: token }
+        });
+  
+        if (registro) {
+  
+          const hashedPassword = await bcrypt.hash(novaSenha, 10);
+                
+          registro.token = null;
+          registro.senha = hashedPassword;
+  
+          await registro.save();
+              
+          return res.status(201).json({ mensagem: 'Alteração realizada', registro });
+  
+          } else {
+            // Senha incorreta
+            return res.status(401).json({ mensagem: 'Credenciais inválidas' });
+              }
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ mensagem: 'Erro durante a busca e comparação de senha' });
+      };
+    }
 
 
 }
