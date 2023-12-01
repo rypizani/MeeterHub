@@ -3,11 +3,13 @@ const cors = require('cors');
 const path = require('path');
 require("dotenv").config();
 const app = express();
+const { JWTController } =require('./middleware/JWTController')
 
 //Os imports vem aqui
 const RegistroRouter = require('./router/Registro/registroRouter');
 const LoginRouter = require('./router/Login/loginRouter');
-const forgotPasswordRouter = require('./router/ForgotPassword/forgotPasswordRouter')
+const forgotPasswordRouter = require('./router/ForgotPassword/forgotPasswordRouter');
+const { HomeController } =require('./controller/HomeController');
 
 
 const porta = 3000;
@@ -27,9 +29,11 @@ app.use((req, res, next) => {
 });
 
 //Os endpoints vem aqui
-app.use("/registro", RegistroRouter);
-app.use("/login", LoginRouter);
-app.use("/forgotpassword", forgotPasswordRouter);
+//Rotas do controle de registro
+app.post("/registro", HomeController.register )
+app.post("/login", HomeController.login )
+app.post("/refreshPassword",HomeController.refreshPassword)
+app.post("/forgetpassword", HomeController.forgetPassword )
 
 
 app.get("/", (req, res) => {

@@ -44,24 +44,73 @@ exports.RegistroController = {
         }
     },
 
+    //Get por email
+    async getByEmail(email) {
+        const registro = await Registro.findOne({
+            where: { email: email },
+        }); 
+        return registro
+
+    },
+
+    //BUscando email e senha no banco
+    async  getByEmailAndComparePassword(req, res) {
+        const email = req.params.email;
+        const senha = req.params.senha;
+        try {
+            // Buscar o registro pelo email fornecido
+            const registro = await Registro.findOne({
+                where: { email: email }
+            });
+            //const hashedPassword = await bcrypt.hash(senha, 10)
+            if (registro) {
+                // Comparar a senha fornecida com a senha armazenada usando bcrypt
+                const senhaCorreta = await bcrypt.compare(senha, registro.senha);
+    
+                if (senhaCorreta) {
+                    // Senha correta, retornar o registro do usuário
+                    return res.status(200).json({ mensagem: 'Usuário autenticado', registro: registro });
+                } else {
+                    // Senha incorreta
+                    return res.status(401).json({ mensagem: 'Credenciais inválidas' });
+                }
+            } else {
+                // Usuário não encontrado
+                return res.status(403).json({ mensagem: 'Usuário não encontrado' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ mensagem: 'Erro durante a busca e comparação de senha' });
+        }
+    },
+    
+
     async put (req, res){
         const registroId = req.params.registroId;
-        const{ nome, email, endereco, CEP }= req.body;
+        const{ nome, email, senha, endereco, CEP }= req.body;
         try {
-            const registro = await Alocacoes.findByPk(registroId);
-            if(registro){
-                await registro.update({               
+            const hashedPassword = await bcrypt.hash(senha, 10);
+            const registroEncontrado = await Registro.findByPk(registroId);
+    
+            if (registroEncontrado) {
+                const registroAtualizado = await Registro.update({
                     nome,
                     email,
                     endereco,
+                    senha: hashedPassword,
                     CEP
+                }, {
+                    where: { registroId: registroId }
                 });
-                res.status(200).json(registro);
+    
+                res.status(200).json(registroEncontrado);
             } else {
-                res.status(404).json({menssage: 'Registro não encontrado'});
+                res.status(404).json({ mensagem: 'Registro não encontrado' });
             }
         } catch (error) {
+            console.error(error);
             res.status(500).json({ erro: "Erro ao atualizar um registro" });
+      
         }
     },
 
