@@ -50,10 +50,9 @@ exports.RegistroController = {
             where: { email: email },
         }); 
         return registro
-
     },
 
-    //BUscando email e senha no banco
+    //Buscando email e senha no banco
     async  getByEmailAndComparePassword(req, res) {
         const email = req.params.email;
         const senha = req.params.senha;
@@ -84,7 +83,6 @@ exports.RegistroController = {
         }
     },
     
-
     async put (req, res){
         const registroId = req.params.registroId;
         const{ nome, email, senha, endereco, CEP }= req.body;
